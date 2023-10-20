@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { Component } from 'react';
 import { Alert, Button, Switch, StyleSheet, Text, TextInput, View } from 'react-native';
+// Platform es una variable que nos permite saber en que plataforma estamos corriendo la app
+import { Platform } from 'react-native';
 
 export default class App extends Component {
     constructor(props) {
@@ -12,8 +14,19 @@ export default class App extends Component {
     }
     onPressLearnMore = () => {
         console.warn('Presionaste el boton');
-        //Mostrar el valor del input en un alert
-        Alert.alert(`${this.state.textValue}`,`\n Esto es lo que escribiste`);
+        //Mostrar el valor del input en un alert en caso si esta en movil, y un alert normal si es en web
+        if (Platform.OS === 'web') {
+            alert(`Wada8a \n ${this.state.textValue}`);
+        } else {
+            Alert.alert("Wada8a",
+                this.state.textValue,
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ],
+                { cancelable: false }
+            );
+        }
+
     }
     onChange = (value) => {
         console.warn(`El switch cambió a: ${value}`);
