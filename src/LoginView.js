@@ -13,44 +13,37 @@ export default class LoginView extends Component {
             switchValue: false,
             textValue: '',
             email: '',
-            password: ''
+            password: '',
+            emailValid: true,
+            passwordValid: true
         };
     }
     getLogin = () => {
         console.warn('Hola desde el router');
     }
     onPressLearnMore = () => {
-        console.warn('Presionaste el boton');
         //Validar email
-        if (this.state.email === '') {
-            Alert.alert('Email', 'Debes ingresar un email');
-            return;
-        }
+        let emailValid = this.state.email !== '' && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/.test(this.state.email);
         //Validar password
-        if (this.state.password === '') {
-            Alert.alert('Password', 'Debes ingresar una contraseña');
-            return;
-        }
-        //Validar email y password
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-        if (reg.test(this.state.email) === false) {
-            Alert.alert('Email', 'Debes ingresar un email valido');
-            return;
-        }
-        if (this.state.password.length < 8) {
-            Alert.alert('Password', 'Debes ingresar una contraseña de al menos 8 caracteres');
+        let passwordValid =
+            this.state.password !== '' &&
+            this.state.password.length >= 8 &&
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/.test(this.state.password);
+        
+        this.setState({ emailValid: emailValid, passwordValid: passwordValid });
+        
+        if (emailValid === false || passwordValid === false) {
+            Alert.alert('Error', 'Revisa los campos');
             return;
         }
         //Mostrar el valor del input en un alert en caso si esta en movil, y un alert normal si es en web
         if (Platform.OS === 'web') {
-            alert(`Wada8a \n Email: ${this.state.textValue}, password: ${this.state.password}`);
+            alert(`Wada8a \n Email: ${this.state.email}, password: ${this.state.password}`);
         } else {
             Alert.alert("Wada8a",
-                "Email: "+this.state.email + " & password: "+this.state.password,
-                [
+                "Email: "+this.state.email + " & password: "+this.state.password,[
                     { text: "OK", onPress: () => console.log("OK Pressed") }
-                ],
-                { cancelable: false }
+                ],{ cancelable: false }
             );
         }
     }
@@ -59,10 +52,10 @@ export default class LoginView extends Component {
         this.setState({ switchValue: value });
     }
     handleEmailChange = email => {
-        this.setState({ email: email });
+        this.setState({ email: email, emailValid: true });
     };
     handlePasswordChange = password => {
-        this.setState({ password: password });
+        this.setState({ password: password, passwordValid: true });
     };
     handleLogin = () => {
         // Lógica de login aquí
@@ -79,19 +72,18 @@ export default class LoginView extends Component {
                     placeholder='Email'
                     onChangeText={this.handleEmailChange}
                     value={this.state.email}
-                    style={styles.input}
+                    style={[styles.input, !this.state.emailValid && styles.inputError]}
                 />
                 <Text style={styles.label}>Password</Text>
                 <TextInput
                     placeholder='Password'
                     onChangeText={this.handlePasswordChange}
                     value={this.state.password}
-                    style={styles.input}
+                    style={[styles.input, !this.state.passwordValid && styles.inputError]}
                     secureTextEntry
                 />
                 <Button
                     title='Iniciar Sesión'
-                    buttonStyle={styles.loginButton}
                     onPress={this.onPressLearnMore}
                     style={styles.loginButton}
                 />
@@ -109,20 +101,26 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     input: {
-        width: '100%',
+        width: '80%',
         marginBottom: 20,
-        borderRadius: 10,
+        borderRadius: 30,
         borderWidth: 1,
-        borderColor: '#841584',
+        borderColor: '#7E7E7E',
         padding: 10,
         fontSize: 16,
         textAlign: 'center'
     },
+    inputError: {
+        borderColor: 'red',
+        borderWidth: 2
+    },
     loginButton: {
         width: '100%',
         backgroundColor: '#841584',
-        borderRadius: 10,
-        fontSize: 16
+        borderRadius: 30,
+        fontSize: 16,
+        padding: 10,
+        alignContent: 'right',
     },
     logo: {
         width: 150,
