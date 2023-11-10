@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Component } from 'react';
-import { Alert, Button, Switch, StyleSheet, Text, Input, TextInput, View, Image } from 'react-native';
+import { Alert, Button, Switch, StyleSheet, Text, Input, TextInput, ToastAndroid, View, Image } from 'react-native';
 import logo from '../assets/logo.png';
 import { Actions } from 'react-native-router-flux';
 // Platform es una variable que nos permite saber en que plataforma estamos corriendo la app
@@ -22,30 +22,47 @@ export default class LoginView extends Component {
         console.warn('Hola desde el router');
     }
     onPressLearnMore = () => {
-        //Validar email
-        let emailValid = this.state.email !== '' && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/.test(this.state.email);
-        //Validar password
-        let passwordValid =
-            this.state.password !== '' &&
-            this.state.password.length >= 8 &&
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/.test(this.state.password);
-        
-        this.setState({ emailValid: emailValid, passwordValid: passwordValid });
-        
-        if (emailValid === false || passwordValid === false) {
-            Alert.alert('Error', 'Revisa los campos');
-            return;
-        }
-        //Mostrar el valor del input en un alert en caso si esta en movil, y un alert normal si es en web
-        if (Platform.OS === 'web') {
-            alert(`Wada8a \n Email: ${this.state.email}, password: ${this.state.password}`);
+        const { email, password } = this.state;
+        let emailValid = true;
+        let passwordValid = true;
+
+        if (email === '' && password === '') {
+            this.showToast('Los datos NO son válidos. Intentálo de nuevo', ToastAndroid.SHORT);
+            emailValid = false;
+            passwordValid = false;
         } else {
-            Alert.alert("Wada8a",
-                "Email: "+this.state.email + " & password: "+this.state.password,[
-                    { text: "OK", onPress: () => console.log("OK Pressed") }
-                ],{ cancelable: false }
-            );
+            if (email === '') {
+                this.showToast('Debes ingresar un email', ToastAndroid.LONG);
+                emailValid = false;
+            } else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/.test(email))) {
+                this.showToast('El email no es válido', ToastAndroid.LONG);
+                emailValid = false;
+            }
+
+            if (password === '' && email !== '') {
+                this.showToast('Debes ingresar una contraseña', ToastAndroid.SHORT);
+                passwordValid = false;
+            } else {
+                if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/.test(password))) {
+                    this.showToast('La contraseña debe tener al menos una mayúscula, minúscula y un carácter especial', ToastAndroid.SHORT);
+                    passwordValid = false;
+                }
+                if (password.length <= 8) {
+                    this.showToast('La contraseña debe tener al menos 8 caracteres', ToastAndroid.LONG);
+                    passwordValid = false;
+                }
+            }
         }
+
+        this.setState({ emailValid, passwordValid });
+
+        if (emailValid && passwordValid) {
+            this.showToast('Los datos son válidos', ToastAndroid.LONG);
+        }
+    }
+
+    showToast(message, duration) {
+        ToastAndroid.showWithGravityAndOffset(message, duration, ToastAndroid.TOP, 25, 50);
     }
     onChange = (value) => {
         console.warn(`El switch cambió a: ${value}`);
