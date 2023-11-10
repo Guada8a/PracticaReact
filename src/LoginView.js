@@ -79,20 +79,21 @@ export default class LoginView extends Component {
                     placeholder='Email'
                     onChangeText={this.handleEmailChange}
                     value={this.state.email}
-                    containerStyle={styles.input}
+                    style={styles.input}
                 />
                 <Text style={styles.label}>Password</Text>
                 <TextInput
                     placeholder='Password'
                     onChangeText={this.handlePasswordChange}
                     value={this.state.password}
-                    containerStyle={styles.input}
+                    style={styles.input}
                     secureTextEntry
                 />
                 <Button
                     title='Iniciar Sesión'
                     buttonStyle={styles.loginButton}
                     onPress={this.onPressLearnMore}
+                    style={styles.loginButton}
                 />
                 <StatusBar style="auto" />
             </View>
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     input: {
-        width: '80%',
+        width: '100%',
         marginBottom: 20,
         borderRadius: 10,
         borderWidth: 1,
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     loginButton: {
-        width: '80%',
+        width: '100%',
         backgroundColor: '#841584',
         borderRadius: 10,
         fontSize: 16
