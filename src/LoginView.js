@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { Component } from 'react';
-import { Alert, Button, Switch, StyleSheet, Text, Input, TextInput, ToastAndroid, View, Image } from 'react-native';
+import { Button, StyleSheet, Text, Input, TextInput, ToastAndroid, View, Image } from 'react-native';
 import logo from '../assets/logo.png';
+import { Actions } from 'react-native-router-flux';
 
 export default class LoginView extends Component {
     constructor(props) {
@@ -55,6 +56,9 @@ export default class LoginView extends Component {
 
         if (emailValid && passwordValid) {
             this.showToast('Los datos son válidos', ToastAndroid.LONG);
+            this.handleLogin();
+            Actions.home();
+            
         }
     }
 

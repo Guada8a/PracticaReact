@@ -37,6 +37,7 @@ export default class ArtistList extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
+                <Text style={ styles.h1 }>Top Artistas</Text>
                 <ListView
                     enableEmptySections={true}
                     dataSource={this.state.dataSource}
@@ -59,6 +60,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#eee",
         paddingTop: 10
+    },
+    h1:{
+        fontSize: 30,
+        textAlign: "center",
+        color: "#333",
+        fontWeight: "bold"
     },
     input: {
         height: 50,

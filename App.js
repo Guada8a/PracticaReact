@@ -6,14 +6,13 @@ import { Actions, Scene, Router } from 'react-native-router-flux';
 
 const scenes = Actions.create(
     <Scene key="root">
-        <Scene key="login" component={LoginView} title="Login" hideNavBar />
-        <Scene key="home" component={HomeView} title="Home" hideNavBar init={true} />
+        <Scene key="login" component={LoginView} title="Login" hideNavBar/>
+        <Scene key="home" component={HomeView} title="Home" hideNavBar/>
     </Scene>
 );
 
-export default class App extends Component <Props>{
+export default class App extends Component{
     render() {
-        // return <Router scenes={scenes} />;
-        return <HomeView />;
+        return <Router scenes={scenes}/>;
     }
 }

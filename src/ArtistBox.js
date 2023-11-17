@@ -17,24 +17,25 @@ export default class ArtistBox extends Component<Props> {
 
 const styles = StyleSheet.create({
     artistBox: {
-        margin: 5,
+        margin: 10,
         backgroundColor: 'white',
         flexDirection: 'row',
-        elevation: 2
+        elevation: 2,
+        borderRadius: 50
     },
     image: {
-        width: 150,
-        height: 150
+        width: 100,
+        height: 100
     },
     info: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: 'left',
+        justifyContent: 'center',
+        marginLeft: 10
     },
     name: {
-        fontSize: 20,
-        marginTop: 10,
+        fontSize: 15,
         color: '#333'
     }
 });
