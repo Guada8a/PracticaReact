@@ -27,18 +27,25 @@ export default class ArtistDetailView extends Component {
         if (!artist) return null;
         return (
             <View style={styles.container}>
-                <Image style={styles.image} source={{ uri: artist.image }} />
+                <Image style={styles.image} source={{ uri: artist.image[0]["#text"] }} />
                 <View style={styles.info}>
                     <Text style={styles.name}>{artist.name}</Text>
+                    {/* Stats */}
                     <View style={styles.row}>
                         <View style={styles.iconContainer}>
                             <Icon name="md-heart" size={30} color="gray" />
-                            <Text style={styles.count}>{artist.favorites}</Text>
+                            <Text style={styles.count}>{artist.stats.listeners} seguidores</Text>
                         </View>
                         <View style={styles.iconContainer}>
                             <Icon name="md-star" size={30} color="gray" />
-                            <Text style={styles.count}>{artist.rating}</Text>
+                            <Text style={styles.count}>{artist.stats.playcount} reproducciones</Text>
                         </View>
+                    </View>
+                    {/* Bio */}
+                    <Text style={styles.bio}>Biografía</Text>
+                    <View style={styles.row}>
+                        {/* Formatear para habilitir enlaces */}
+                        <Text style={styles.count}>{artist.bio.summary}</Text>
                     </View>
                 </View>
                 <TouchableOpacity style={styles.button} onPress={() => Actions.pop()}>
@@ -67,6 +74,12 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center"
     },
+    bio: {
+        fontSize: 16,
+        marginBottom: 20,
+        fontWeight: "bold",
+        textAlign: "center"
+    },
     info: {
         marginBottom: 20
     },
@@ -81,17 +94,22 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     count: {
-        color: "gray"
+        color: "gray",
+        textAlign: "center"
     },
     button: {
         backgroundColor: "gray",
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 5,
+        borderRadius: 25,
         alignSelf: "center"
     },
     buttonText: {
         fontSize: 18,
         color: "white"
+    },
+    label: {
+        textAlign: "center",
+        marginBottom: 5
     }
 });

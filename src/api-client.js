@@ -53,16 +53,7 @@ function getArtist(artistName) {
     })
         .then(response => response.json())
         .then(data => {
-            const artist = data.artist;
-            if (artist) {
-                return {
-                    name: artist.name,
-                    bio: artist.bio ? artist.bio.summary : null,
-                    image: artist.image ? artist.image[2]['#text'] : null // Use a different size if needed
-                };
-            } else {
-                return null;
-            }
+            return data.artist;
         })
         .catch(error => {
             console.error('Error fetching artist info:', error);
