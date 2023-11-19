@@ -23,12 +23,12 @@ function getMusicData() {
                         .then(deezerData => ({
                             id: artist.mbid,
                             name: artistName,
-                            image: deezerData.picture_small
+                            image: deezerData.picture_medium
                         }))
                         .catch(() => ({
                             id: artist.mbid,
                             name: artistName,
-                            image: artist.image[0]['#text']
+                            image: artist.image[1]['#text']
                         }));
                 } else {
                     return {

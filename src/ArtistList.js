@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
         fontSize: 30,
         textAlign: "center",
         color: "#333",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        paddingVertical: 10
     },
     input: {
         height: 50,

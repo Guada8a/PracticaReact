@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Component } from 'react';
-import { Button, StyleSheet, Text, Input, TextInput, ToastAndroid, View, Image } from 'react-native';
+import { StyleSheet, Text, Pressable, TextInput, ToastAndroid, View, Image } from 'react-native';
 import logo from '../assets/logo.png';
 import { Actions } from 'react-native-router-flux';
 
@@ -77,12 +77,12 @@ export default class LoginView extends Component {
     };
     handleLogin = () => {
         // Lógica de login aquí
-        console.log('Email:', this.state.email);
-        console.log('Password:', this.state.password);
+        console.info('Login successful');
     };
     render() {
         return (
             <View style={styles.container}>
+                <Text style={styles.h1}>Iniciar Sesión</Text>
                 <Image source={logo} style={styles.logo} />
 
                 <Text style={styles.label}>Email</Text>
@@ -100,12 +100,16 @@ export default class LoginView extends Component {
                     style={[styles.input, !this.state.passwordValid && styles.inputError]}
                     secureTextEntry
                 />
-                <Button
+                {/* <Button
                     title='Iniciar Sesión'
                     onPress={this.onPressLearnMore}
                     style={styles.loginButton}
-                />
-                <StatusBar style="auto" />
+                /> */}
+                <Pressable
+                    onPress={this.onPressLearnMore}
+                    style={styles.loginButton}>
+                    <Text style={styles.title}>Iniciar Sesión</Text>
+                </Pressable>
             </View>
         );
     }
@@ -116,12 +120,24 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',
+    },
+    title: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    h1: {
+        marginTop: 50,
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 50,
+        marginLeft: 30,
+        alignSelf: 'flex-start',
     },
     input: {
         width: '80%',
         marginBottom: 20,
-        borderRadius: 30,
+        borderRadius: 10,
         borderWidth: 1,
         borderColor: '#7E7E7E',
         padding: 10,
@@ -133,17 +149,15 @@ const styles = StyleSheet.create({
         borderWidth: 2
     },
     loginButton: {
-        width: '100%',
-        backgroundColor: '#841584',
-        borderRadius: 30,
+        backgroundColor: 'black',
+        borderRadius: 10,
         fontSize: 16,
-        padding: 10,
-        alignContent: 'right',
+        paddingVertical: 20,
+        paddingHorizontal: 50,
     },
     logo: {
         width: 150,
         height: 150,
-        marginBottom: 20
     },
     label: {
         color: 'black',
