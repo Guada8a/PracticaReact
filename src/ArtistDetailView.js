@@ -51,11 +51,13 @@ export default class ArtistDetailView extends Component {
                         <Row>
                             <IconContainer>
                                 <Icon name="md-heart" size={30} color="red" />
-                                <Text style={styles.count}>{this.formatNumber(artist.stats.listeners)} seguidores</Text>
+                                <Text style={styles.count}>{this.formatNumber(artist.stats.listeners)} oyentes</Text>
                             </IconContainer>
                             <IconContainer>
                                 <Icon name="md-play-circle" size={30} color="white" />
-                                <Text style={styles.count}>{artist.streamable} Streameable</Text>
+                                {/* CONDICIONAR STREAMABLE */
+                                    artist.streamable === "0" ? <Text style={styles.count}>No Streamable</Text> : <Text style={styles.count}>{artist.streamable} Streamable</Text>
+                                }
                             </IconContainer>
                             <IconContainer>
                                 <Icon name="md-play" size={30} color="white" />
