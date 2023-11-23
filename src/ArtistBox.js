@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, Text } from 'react-native';
 
-export default class ArtistBox extends Component<Props> {
+export default class ArtistBox extends Component {
     render() {
         const { image, name } = this.props.artist;
         return (
@@ -18,17 +18,24 @@ export default class ArtistBox extends Component<Props> {
 const styles = StyleSheet.create({
     artistBox: {
         margin: 5,
-        backgroundColor: 'white',
         flexDirection: 'row',
-        elevation: 2,
-        borderRadius: 30,
-        opacity: 0.9
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        elevation: 10,
+        backgroundColor: "white",
+        borderRadius: 10,
+        marginHorizontal: 20,
     },
     image: {
         width: 100,
         height: 100,
-        borderTopLeftRadius: 30,
-        borderBottomLeftRadius: 30
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10
     },
     info: {
         flex: 1,

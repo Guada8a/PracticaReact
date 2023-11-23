@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Platform } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Pressable } from "react-native";
 import ListView from 'deprecated-react-native-listview';
 import ArtistBox from "./ArtistBox";
 import ArtistDetailView from "./ArtistDetailView";
+import Icon from "react-native-vector-icons/Ionicons";
 import { Actions } from "react-native-router-flux";
 
 export default class ArtistList extends Component<Props> {
@@ -25,9 +26,13 @@ export default class ArtistList extends Component<Props> {
         this.updateDataSource(this.props.artists);
     }
 
-    componentWillUnmount(newProps) {
-        if (newProps.artists !== this.props.artists) {
-            this.updateDataSource(newProps.artists);
+    componentWillUnmount() {
+        // FIX: Cannot read property 'artists' of undefined (evaluating 'this.props.artists')
+        if (this.props) {
+            const artists = this.props.artists;
+            if (artists) {
+                this.updateDataSource(artists);
+            }
         }
     }
     
@@ -38,7 +43,6 @@ export default class ArtistList extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={ styles.h1 }>Top Artistas</Text>
                 <ListView
                     enableEmptySections={true}
                     dataSource={this.state.dataSource}
@@ -59,8 +63,7 @@ export default class ArtistList extends Component<Props> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#eee",
-        paddingTop: 10
+        backgroundColor: "#eee"
     },
     h1:{
         fontSize: 30,

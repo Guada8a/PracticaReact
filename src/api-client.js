@@ -15,10 +15,10 @@ function getMusicData() {
         .then(artists => {
             return Promise.all(artists.map(artist => {
                 const artistName = artist.name;
-
+                const nameRefactor = artistName.replace(/ /g, '-');
                 // Realizar la solicitud a la API de Deezer solo si los nombres coinciden
                 if (artistName) {
-                    return fetch(`${deezerAPI}${artistName}`)
+                    return fetch(`${deezerAPI}${nameRefactor}`)
                         .then(response => response.json())
                         .then(deezerData => ({
                             id: artist.mbid,
@@ -51,14 +51,14 @@ function getArtist(artistName) {
             'Content-Type': 'application/json',
         }
     })
-        .then(response => response.json())
-        .then(data => {
-            return data.artist;
-        })
-        .catch(error => {
-            console.error('Error fetching artist info:', error);
-            return null;
-        });
+    .then(response => response.json())
+    .then(data => {
+        return data.artist;
+    })
+    .catch(error => {
+        console.error('Error fetching artist info:', error);
+        return null;
+    });
 }
 
 export { getMusicData, getArtist };
